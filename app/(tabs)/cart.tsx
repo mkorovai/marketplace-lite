@@ -1,20 +1,18 @@
 // expo
 import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
 
 // react-native
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 // components
 import ParallaxScreenLayout from '@/components/layout/ParallaxScreenLayout';
 import ThemedText from '@/components/ui/ThemedText';
 import ThemedView from '@/components/ui/ThemedView';
 
-export default function HomeScreen() {
-  const router = useRouter();
+export default function CartScreen() {
   return (
     <ParallaxScreenLayout
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
         <Image
           style={styles.headerImage}
@@ -23,12 +21,7 @@ export default function HomeScreen() {
       }
     >
       <ThemedView>
-        <ThemedText type="title">Welcome!</ThemedText>
-      </ThemedView>
-      <ThemedView>
-        <Pressable onPress={() => router.push('/product/1')}>
-          <ThemedText type="link">Go to product</ThemedText>
-        </Pressable>
+        <ThemedText type="title">Cart...</ThemedText>
       </ThemedView>
     </ParallaxScreenLayout>
   );
