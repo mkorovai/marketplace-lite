@@ -1,6 +1,10 @@
+// expo
 import { Link } from 'expo-router';
+
+// react-native
 import { StyleSheet } from 'react-native';
 
+// styles
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
