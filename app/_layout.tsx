@@ -9,7 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 // hooks
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Set tabs as the initial navigation anchor
 export const unstable_settings = {

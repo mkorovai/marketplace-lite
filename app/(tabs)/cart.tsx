@@ -5,11 +5,11 @@ import { Image } from 'expo-image';
 import { StyleSheet } from 'react-native';
 
 // components
-import { ParallaxScreenLayout } from '@/components/layout/ParallaxScreenLayout';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import ParallaxScreenLayout from '@/components/layout/ParallaxScreenLayout';
+import ThemedText from '@/components/ui/ThemedText';
+import ThemedView from '@/components/ui/ThemedView';
 
-export default function TabTwoScreen() {
+export default function CartScreen() {
   return (
     <ParallaxScreenLayout
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -21,7 +21,7 @@ export default function TabTwoScreen() {
       }
     >
       <ThemedView>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Cart...</ThemedText>
       </ThemedView>
     </ParallaxScreenLayout>
   );

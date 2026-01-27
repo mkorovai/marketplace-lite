@@ -2,7 +2,7 @@
 import { ReactNode, ReactElement } from 'react';
 
 // components
-import ParallaxScrollView from '@/components/parallax-scroll-view';
+import ParallaxScrollView from '@/components/layout/ParallaxScrollView';
 
 type Props = {
   children: ReactNode;
@@ -13,7 +13,7 @@ type Props = {
   };
 };
 
-export function ParallaxScreenLayout({ children, headerImage, headerBackgroundColor }: Props) {
+export default function ParallaxScreenLayout({ children, headerImage, headerBackgroundColor }: Props) {
   return (
     <ParallaxScrollView headerImage={headerImage} headerBackgroundColor={headerBackgroundColor}>
       {children}
