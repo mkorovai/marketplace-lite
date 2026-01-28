@@ -14,13 +14,7 @@ module.exports = defineConfig([
     },
     rules: {
       'prettier/prettier': 'error',
-      'import/order': [
-        'error',
-        {
-          'newlines-between': 'always-and-inside-groups',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
+      'import/order': ['off'],
     },
   },
 ]);
