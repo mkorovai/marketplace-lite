@@ -22,6 +22,12 @@ const MAPPING = {
   'house.fill': 'home',
   'cart.fill': 'shopping-cart',
   'person.fill': 'person',
+  'heart.outline': 'favorite-border',
+  'heart.fill': 'favorite',
+  'star.outline': 'star-border',
+  'star.fill': 'star',
+  'shopping.cart': 'shopping-cart',
+  'filter.alt': 'filter-alt',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
 } as IconMapping;
