@@ -15,7 +15,7 @@ type Props = {
 export default function ScreenLayout({ children, padded = true }: Props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['top'] as const}>
-      <ThemedView style={{ flex: 1, paddingHorizontal: 16 }}>{children}</ThemedView>
+      <ThemedView style={{ flex: 1, paddingHorizontal: 16, backgroundColor: '#F9FAFB' }}>{children}</ThemedView>
     </SafeAreaView>
   );
 }
