@@ -15,6 +15,7 @@ module.exports = defineConfig([
     rules: {
       'prettier/prettier': 'error',
       'import/order': ['off'],
+      'react/no-unknown-property': 'off',
     },
   },
 ]);
