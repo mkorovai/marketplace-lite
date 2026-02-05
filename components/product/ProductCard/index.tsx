@@ -2,47 +2,38 @@
 import React from 'react';
 
 // react-native
-import {
-  StyleSheet,
-  Image,
-  ImageSourcePropType,
-  Pressable,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import { StyleSheet, Image, Pressable, TextStyle, ViewStyle } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
 
-type Props = {
-  product: {
-    title: string;
-    category: string;
-    price: number;
-    oldPrice?: number;
-    discountPercent?: number;
-    rating: number;
-    reviewsCount: number;
-    image: ImageSourcePropType;
-  };
-};
+// types
+import { Product } from '@/types/product';
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product }: Product) {
+  const { title, category, price, discountPercentage = 0, reviews = [], thumbnail } = product;
+
+  const getDiscountedPrice = (price: number, discountPercent: number): number => {
+    return Number((price * (1 - discountPercent / 100)).toFixed(2));
+  };
+
+  const newPrice = getDiscountedPrice(price, discountPercentage);
+
   return (
     <ThemedView style={styles.card}>
       <ThemedView style={styles.imageWrapper}>
-        <Image style={styles.image} source={product.image} />
+        <Image style={styles.image} source={{ uri: thumbnail }} />
         <Pressable style={styles.favorite}>
           <ThemedText>
             <IconSymbol name="heart.outline" size={18} color="#0F172A" />
           </ThemedText>
         </Pressable>
-        {product.discountPercent && (
+        {discountPercentage && (
           <ThemedView style={styles.discount}>
             <ThemedText type="smallSemiBold" style={styles.discountText as TextStyle}>
-              -{product.discountPercent}%
+              -{discountPercentage}%
             </ThemedText>
           </ThemedView>
         )}
@@ -50,10 +41,10 @@ export default function ProductCard({ product }: Props) {
       <ThemedView style={styles.content}>
         <ThemedView>
           <ThemedText type="small" style={styles.categoryText as TextStyle}>
-            {product.category}
+            {category}
           </ThemedText>
           <ThemedText numberOfLines={2} style={styles.titleText as TextStyle}>
-            {product.title}
+            {title}
           </ThemedText>
           <ThemedView style={styles.ratingRow}>
             <IconSymbol name="star.fill" size={12} color="#0F172A" />
@@ -61,19 +52,22 @@ export default function ProductCard({ product }: Props) {
             <IconSymbol name="star.fill" size={12} color="#0F172A" />
             <IconSymbol name="star.fill" size={12} color="#0F172A" />
             <IconSymbol name="star.outline" size={12} color="#0F172A" />
-            <ThemedText type="small" style={styles.reviewsText as TextStyle}>
-              ({product.reviewsCount})
-            </ThemedText>
+            {reviews > 0 && (
+              <ThemedText type="small" style={styles.reviewsText as TextStyle}>
+                ({reviews.length})
+              </ThemedText>
+            )}
           </ThemedView>
         </ThemedView>
         <ThemedView style={styles.priceRow}>
           <ThemedView>
-            <ThemedText type="defaultSemiBold">${product.price.toFixed(2)}</ThemedText>
-            {product.oldPrice && (
-              <ThemedText type="small" style={styles.oldPriceText as TextStyle}>
-                ${product.oldPrice.toFixed(2)}
-              </ThemedText>
-            )}
+            {discountPercentage && <ThemedText type="defaultSemiBold">${newPrice}</ThemedText>}
+            <ThemedText
+              type="defaultSemiBold"
+              style={(discountPercentage && styles.oldPriceText) as TextStyle}
+            >
+              ${price.toFixed(2)}
+            </ThemedText>
           </ThemedView>
           <Pressable style={styles.cartButton as ViewStyle}>
             <ThemedText>
@@ -154,6 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   oldPriceText: {
+    fontSize: 12,
     color: '#9CA3AF',
     textDecorationLine: 'line-through',
   },

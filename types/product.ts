@@ -1,21 +1,22 @@
-// react-native
-import { ImageSourcePropType } from 'react-native';
+type Review = {
+  comment: string;
+  date: string;
+  rating: number;
+  reviewerName: string;
+};
 
 export type Product = {
-  id: string;
+  id: number;
   title: string;
   description: string;
 
-  category: 'Electronics' | 'Fashion' | 'Home';
+  category: string;
 
   price: number;
-  oldPrice?: number;
-  discountPercent?: number;
+  discountPercentage?: number;
 
   rating: number;
-  reviewsCount: number;
+  reviews?: Review[];
 
-  image: ImageSourcePropType;
-
-  isFavorite: boolean;
+  thumbnail: string;
 };
