@@ -3,8 +3,9 @@ import React from 'react';
 
 // components
 import ScreenLayout from '@/components/layout/ScreenLayout';
+import LoadingState from '@/components/feedback/LoadingState';
+import ErrorState from '@/components/feedback/ErrorState';
 import ThemedView from '@/components/ui/ThemedView';
-import ThemedText from '@/components/ui/ThemedText';
 import Header from '@/components/home/Header';
 import Filters from '@/components/home/Filters';
 import ProductList from '@/components/home/ProductList';
@@ -14,7 +15,7 @@ import { useProducts } from '@/api/useProducts';
 import { useHomeFilters } from '@/hooks/useHomeFilters';
 
 export default function HomeScreen() {
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error, refetch } = useProducts();
   const { search, setSearch, category, setCategory, filteredProducts } = useHomeFilters(
     data?.products ?? [],
   );
@@ -22,7 +23,7 @@ export default function HomeScreen() {
   if (isLoading) {
     return (
       <ScreenLayout>
-        <ThemedText>Loading...</ThemedText>
+        <LoadingState />
       </ScreenLayout>
     );
   }
@@ -30,7 +31,7 @@ export default function HomeScreen() {
   if (error) {
     return (
       <ScreenLayout>
-        <ThemedText>Something went wrong</ThemedText>
+        <ErrorState onRetry={refetch} />
       </ScreenLayout>
     );
   }
