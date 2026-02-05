@@ -12,13 +12,20 @@ import ThemedView from '@/components/ui/ThemedView';
 type Props = {
   children: ReactNode;
   padded?: boolean;
+  backgroundColor?: 'string';
 };
 
-export default function ScreenLayout({ children, padded = true }: Props) {
+export default function ScreenLayout({
+  children,
+  padded = true,
+  backgroundColor = '#F9FAFB',
+}: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top'] as const}>
       <Header />
-      <ThemedView style={[styles.container, padded && styles.padded]}>{children}</ThemedView>
+      <ThemedView style={[styles.container, padded && styles.padded, { backgroundColor }]}>
+        {children}
+      </ThemedView>
     </SafeAreaView>
   );
 }
