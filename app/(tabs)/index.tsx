@@ -28,7 +28,7 @@ export default function HomeScreen() {
     );
   }
 
-  if (error) {
+  if (error || !filteredProducts) {
     return (
       <ScreenLayout>
         <ErrorState onRetry={refetch} />
