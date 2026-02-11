@@ -28,6 +28,7 @@ const MAPPING = {
   'star.fill': 'star',
   'shopping.cart.fill': 'shopping-cart',
   'filter.fill': 'filter-alt',
+  'arrow.back': 'arrow-back-ios-new',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
 } as IconMapping;
