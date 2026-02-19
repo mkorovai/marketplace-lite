@@ -38,7 +38,9 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
               style={[styles.category, active && styles.categoryActive] as ViewStyle}
               onPress={() => onCategoryChange(item)}
             >
-              <ThemedText type="default" style={active && styles.categoryTextActive}>{item}</ThemedText>
+              <ThemedText type="default" style={active && styles.categoryTextActive}>
+                {item}
+              </ThemedText>
             </Pressable>
           );
         })}
