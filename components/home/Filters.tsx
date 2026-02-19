@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, TextStyle } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -18,13 +18,13 @@ export default function Filters({ count }: Props) {
     <ThemedView style={styles.root}>
       {count > 0 && (
         <ThemedView style={styles.countProducts}>
-          <ThemedText type="small" style={styles.countProductsText as TextStyle}>
+          <ThemedText type="xs" style={styles.countProductsText}>
             {count} products
           </ThemedText>
         </ThemedView>
       )}
       <ThemedView style={styles.filtersButton}>
-        <ThemedText>
+        <ThemedText type="default">
           <IconSymbol name="filter.fill" size={18} color="#000" />
         </ThemedText>
         <ThemedText type="default">Filters</ThemedText>
@@ -33,7 +33,7 @@ export default function Filters({ count }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
     flexDirection: 'row',
     justifyContent: 'space-between',

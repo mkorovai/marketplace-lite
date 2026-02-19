@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, TextStyle, ViewStyle, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -48,10 +48,10 @@ export default function ProductInfo(props: Props) {
   return (
     <ThemedView style={styles.root}>
       <ThemedView>
-        <ThemedText type="small" style={styles.categoryText as TextStyle}>
+        <ThemedText type="xs" style={styles.categoryText}>
           {category}
         </ThemedText>
-        <ThemedText numberOfLines={2} style={styles.titleText as TextStyle}>
+        <ThemedText numberOfLines={2} type="defaultSemiBold" style={styles.titleText}>
           {title}
         </ThemedText>
         <ThemedView style={styles.ratingRow}>
@@ -61,7 +61,7 @@ export default function ProductInfo(props: Props) {
           <IconSymbol name="star.fill" size={12} color="#0F172A" />
           <IconSymbol name="star.outline" size={12} color="#0F172A" />
           {reviewsCount > 0 && (
-            <ThemedText type="small" style={styles.reviewsText as TextStyle}>
+            <ThemedText type="xs" style={styles.reviewsText}>
               ({reviewsCount})
             </ThemedText>
           )}
@@ -70,10 +70,7 @@ export default function ProductInfo(props: Props) {
       <ThemedView style={styles.priceRow}>
         <ThemedView>
           {isDiscountPercentage && <ThemedText type="defaultSemiBold">${newPrice}</ThemedText>}
-          <ThemedText
-            type="defaultSemiBold"
-            style={(isDiscountPercentage && styles.oldPriceText) as TextStyle}
-          >
+          <ThemedText type="defaultSemiBold" style={isDiscountPercentage && styles.oldPriceText}>
             ${price.toFixed(2)}
           </ThemedText>
         </ThemedView>
@@ -88,7 +85,7 @@ export default function ProductInfo(props: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
     flex: 1,
     flexDirection: 'column',
@@ -102,8 +99,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     paddingBottom: 6,
-    fontWeight: 600,
-    fontSize: 14,
   },
   ratingRow: {
     flexDirection: 'row',

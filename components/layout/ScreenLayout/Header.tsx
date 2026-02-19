@@ -13,10 +13,10 @@ export default function Header() {
   return (
     <ThemedView style={styles.root}>
       <ThemedView>
-        <ThemedText type="subtitle">Marketplace</ThemedText>
+        <ThemedText type="lgSemiBold">Marketplace</ThemedText>
       </ThemedView>
       <Pressable style={styles.shoppingButton as ViewStyle}>
-        <ThemedText>
+        <ThemedText type="default">
           <IconSymbol name="shopping.cart.fill" size={18} color="#0F172A" />
         </ThemedText>
       </Pressable>

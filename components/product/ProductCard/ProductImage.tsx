@@ -2,7 +2,15 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, StyleProp, ImageStyle, TextStyle, Image, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  StyleProp,
+  ImageStyle,
+  ViewStyle,
+  TextStyle,
+  Image,
+  Pressable,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -34,7 +42,7 @@ export default function ProductImage(props: Props) {
       )}
       {isDiscountPercentage && (
         <ThemedView style={styles.discount}>
-          <ThemedText type="smallSemiBold" style={styles.discountText as TextStyle}>
+          <ThemedText type="xsSemiBold" style={styles.discountText}>
             -{discountPercentage}%
           </ThemedText>
         </ThemedView>
@@ -43,7 +51,7 @@ export default function ProductImage(props: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
     position: 'relative',
   },

@@ -1,5 +1,5 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -12,10 +12,10 @@ type Props = {
 export default function ErrorState({ onRetry }: Props) {
   return (
     <ThemedView style={styles.root}>
-      <ThemedText type="defaultSemiBold" style={styles.title as TextStyle}>
+      <ThemedText type="defaultSemiBold" style={styles.title}>
         Something went wrong
       </ThemedText>
-      <ThemedText type="small" style={styles.subtitle as TextStyle}>
+      <ThemedText type="xs" style={styles.subtitle}>
         Please check your connection and try again
       </ThemedText>
       {onRetry && (
@@ -27,7 +27,7 @@ export default function ErrorState({ onRetry }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
     flex: 1,
     justifyContent: 'center',
@@ -36,13 +36,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
   },
   title: {
-    fontWeight: '600',
-    fontSize: 18,
     paddingBottom: 8,
   },
   subtitle: {
     paddingBottom: 20,
-    fontSize: 14,
     color: '#8E8E93',
     textAlign: 'center',
   },
