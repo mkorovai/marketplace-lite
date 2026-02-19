@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, TextInput, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, TextInput, Pressable } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -38,9 +38,7 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
               style={[styles.category, active && styles.categoryActive] as ViewStyle}
               onPress={() => onCategoryChange(item)}
             >
-              <ThemedText type="default" style={active && (styles.categoryTextActive as TextStyle)}>
-                {item}
-              </ThemedText>
+              <ThemedText type="default" style={active && styles.categoryTextActive}>{item}</ThemedText>
             </Pressable>
           );
         })}
@@ -50,7 +48,7 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   searchWrapper: {
     paddingHorizontal: 16,
     marginBottom: 16,

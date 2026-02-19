@@ -1,5 +1,5 @@
 // react-native
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 // expo
 import { Link } from 'expo-router';
@@ -19,7 +19,7 @@ export default function ModalScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   container: {
     flex: 1,
     alignItems: 'center',

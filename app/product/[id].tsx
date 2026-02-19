@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, ScrollView, Pressable } from 'react-native';
 
 // expo
 import { useLocalSearchParams } from 'expo-router';
@@ -82,7 +82,7 @@ export default function ProductDetailScreen() {
                   color="#fff"
                   style={styles.shoppingCartIcon}
                 />
-                <ThemedText type="default" style={styles.cartButtonText as TextStyle}>
+                <ThemedText type="default" style={styles.cartButtonText}>
                   Add to Cart - ${price.toFixed(2)}
                 </ThemedText>
               </Pressable>
@@ -94,7 +94,7 @@ export default function ProductDetailScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   customImage: {
     height: 280,
   },
