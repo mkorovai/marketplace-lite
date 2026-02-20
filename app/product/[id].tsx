@@ -7,6 +7,13 @@ import { StyleSheet, ViewStyle, TextStyle, ImageStyle, ScrollView, Pressable } f
 // expo
 import { useLocalSearchParams } from 'expo-router';
 
+// zustand
+import { useShallow } from 'zustand/react/shallow';
+
+// hooks
+import { useProduct } from '@/api/useProduct';
+import { useCartStore } from '@/store/useCartStore';
+
 // components
 import ProductScreenLayout from '@/components/layout/ProductScreenLayout';
 import LoadingState from '@/components/feedback/LoadingState';
@@ -18,12 +25,20 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
 
-// hooks
-import { useProduct } from '@/api/useProduct';
-
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams();
   const { data, isLoading, error, refetch } = useProduct(id);
+  const { items, addItem } = useCartStore(
+    useShallow((state) => ({ items: state.items, addItem: state.addItem })),
+  );
+
+  const handleAddItem = () => {
+    if (!data) return;
+    addItem(data);
+  };
+
+  // check the work of zustand
+  console.log('items > ', items);
 
   if (isLoading) {
     return (
@@ -75,7 +90,7 @@ export default function ProductDetailScreen() {
                 <ThemedText type="default">{description}</ThemedText>
               </ThemedView>
               <Divider />
-              <Pressable style={styles.cartButton as ViewStyle}>
+              <Pressable style={styles.cartButton as ViewStyle} onPress={handleAddItem}>
                 <IconSymbol
                   name="shopping.cart.fill"
                   size={18}
