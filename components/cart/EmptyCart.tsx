@@ -1,28 +1,19 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 
-type Props = {
-  onRetry?: () => void;
-};
-
-export default function ErrorState({ onRetry }: Props) {
+export default function EmptyCart() {
   return (
     <ThemedView style={styles.root}>
       <ThemedText type="defaultSemiBold" style={styles.title}>
-        Something went wrong
+        Your cart is empty
       </ThemedText>
       <ThemedText type="xs" style={styles.subtitle}>
-        Please check your connection and try again
+        Add products to get started
       </ThemedText>
-      {onRetry && (
-        <Pressable style={styles.button as ViewStyle} onPress={onRetry}>
-          <ThemedText type="default">Try again</ThemedText>
-        </Pressable>
-      )}
     </ThemedView>
   );
 }
@@ -38,15 +29,6 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
     paddingBottom: 8,
   },
   subtitle: {
-    paddingBottom: 20,
     color: '#8E8E93',
-    textAlign: 'center',
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
   },
 });
