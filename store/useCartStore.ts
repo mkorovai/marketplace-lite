@@ -1,6 +1,9 @@
 // zustand
 import { create } from 'zustand';
 
+// utils
+import { calculateTotals } from '@/store/cart.utils';
+
 // types
 import { CartItem } from '@/types/cart';
 import { Product } from '@/types/product';
@@ -8,59 +11,70 @@ import { Product } from '@/types/product';
 type CartState = {
   items: CartItem[];
 
+  totalItems: number;
+  totalPrice: number;
+
   addItem: (product: Product) => void;
   removeItem: (id: number) => void;
   increment: (id: number) => void;
   decrement: (id: number) => void;
-
-  totalItems: () => number;
-  totalPrice: () => number;
 };
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
+  totalItems: 0,
+  totalPrice: 0,
 
   addItem: (product) => {
     set((state) => {
       const existing = state.items.find((item) => item.id === product.id);
-
-      if (existing) {
-        return {
-          items: state.items.map((item) =>
+      const updateItems = existing
+        ? state.items.map((item) =>
             item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
-          ),
-        };
-      }
+          )
+        : [...state.items, { ...product, quantity: 1 }];
 
       return {
-        items: [...state.items, { ...product, quantity: 1 }],
+        items: updateItems,
+        ...calculateTotals(updateItems),
       };
     });
   },
 
   removeItem: (id) => {
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== id),
-    }));
+    set((state) => {
+      const updateItems = state.items.filter((item) => item.id !== id);
+
+      return {
+        items: updateItems,
+        ...calculateTotals(updateItems),
+      };
+    });
   },
 
   increment: (id) => {
-    set((state) => ({
-      items: state.items.map((item) =>
+    set((state) => {
+      const updateItems = state.items.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
-    }));
+      );
+
+      return {
+        items: updateItems,
+        ...calculateTotals(updateItems),
+      };
+    });
   },
 
   decrement: (id) => {
-    set((state) => ({
-      items: state.items
+    set((state) => {
+      const updateItems = state.items
         .map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
-        .filter((item) => item.quantity > 0),
-    }));
+        .filter((item) => item.quantity > 0);
+
+      return {
+        items: updateItems,
+        ...calculateTotals(updateItems),
+      };
+    });
   },
-
-  totalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
-
-  totalPrice: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),
 }));

@@ -1,38 +1,48 @@
-// react-native
-import { StyleSheet } from 'react-native';
+// base
+import React from 'react';
 
-// expo
-import { Image } from 'expo-image';
+// react-native
+import { StyleSheet, ViewStyle, FlatList, Pressable } from 'react-native';
 
 // components
-import ParallaxScreenLayout from '@/components/layout/ParallaxScreenLayout';
-import ThemedText from '@/components/ui/ThemedText';
-import ThemedView from '@/components/ui/ThemedView';
+import ScreenLayout from '@/components/layout/ScreenLayout';
+import EmptyCart from '@/components/cart/EmptyCart';
+import CartItem from '@/components/cart/CartItem';
+import CartSummary from '@/components/cart/CartSummary';
+
+// store
+import { useCartStore } from '@/store/useCartStore';
 
 export default function CartScreen() {
+  const items = useCartStore((state) => state.items);
+
+  if (items.length === 0) {
+    return (
+      <ScreenLayout>
+        <EmptyCart />
+      </ScreenLayout>
+    );
+  }
+
   return (
-    <ParallaxScreenLayout
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <Image
-          style={styles.headerImage}
-          source={require('@/assets/images/partial-react-logo.png')}
-        />
-      }
-    >
-      <ThemedView>
-        <ThemedText type="title">Cart...</ThemedText>
-      </ThemedView>
-    </ParallaxScreenLayout>
+    <ScreenLayout padded={false}>
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ gap: 16, padding: 16 }}
+        renderItem={({ item }) => (
+          <Pressable style={styles.pressable as ViewStyle}>
+            <CartItem data={item} />
+          </Pressable>
+        )}
+      />
+      <CartSummary />
+    </ScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    width: 290,
-    height: 178,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
+  pressable: {
+    flex: 1,
   },
 });
