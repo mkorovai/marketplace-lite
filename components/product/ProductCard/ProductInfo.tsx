@@ -4,46 +4,49 @@ import React from 'react';
 // react-native
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
 
+// zustand
+import { useShallow } from 'zustand/react/shallow';
+
+// store
+import { useCartStore } from '@/store/useCartStore';
+
+// hooks
+import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+import { useCartIcon } from '@/hooks/useCartIcon';
+
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
 
-type Review = {
-  comment: string;
-  date: string;
-  rating: number;
-  reviewerName: string;
-};
+// types
+import { Product } from '@/types/product';
 
 type Props = {
   showCartButton?: boolean;
-  title: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
-  reviews: Review[];
+  product: Product;
   content?: React.ReactNode;
 };
 
 export default function ProductInfo(props: Props) {
-  const {
-    showCartButton = false,
-    title,
-    category,
-    price,
-    discountPercentage = 0,
-    reviews = [],
-    content,
-  } = props;
+  const { showCartButton = false, product, content } = props;
+  const { title, category, price, discountPercentage = 0, reviews = [] } = product;
+
   const isDiscountPercentage = discountPercentage > 0;
   const reviewsCount = reviews.length;
 
-  const getDiscountedPrice = (price: number, discountPercent: number): number => {
-    return Number((price * (1 - discountPercent / 100)).toFixed(2));
-  };
+  const newPrice = useDiscountedPrice(price, discountPercentage);
+  const { items, addItem } = useCartStore(
+    useShallow((state) => ({ items: state.items, addItem: state.addItem })),
+  );
 
-  const newPrice = getDiscountedPrice(price, discountPercentage);
+  const isInCart = items.some((item) => item.id === product.id);
+  const iconName = useCartIcon(isInCart);
+
+  const handleAddItem = () => {
+    if (!product) return;
+    addItem(product);
+  };
 
   return (
     <ThemedView style={styles.root}>
@@ -75,8 +78,11 @@ export default function ProductInfo(props: Props) {
           </ThemedText>
         </ThemedView>
         {showCartButton && (
-          <Pressable style={styles.cartButton as ViewStyle}>
-            <IconSymbol name="shopping.cart.fill" size={18} color="#fff" />
+          <Pressable
+            style={[styles.cartButton, isInCart && styles.cartButtonInCart] as ViewStyle}
+            onPress={handleAddItem}
+          >
+            <IconSymbol name={iconName} size={18} color="#fff" />
           </Pressable>
         )}
       </ThemedView>
@@ -125,5 +131,9 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
     height: 36,
     borderRadius: 18,
     backgroundColor: '#0F172A',
+  },
+  cartButtonInCart: {
+    borderColor: '#16A34A',
+    backgroundColor: '#16A34A',
   },
 });
