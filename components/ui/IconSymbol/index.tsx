@@ -8,9 +8,9 @@ import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
 // expo
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
+import { SymbolWeight } from 'expo-symbols';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
+type IconMapping = Record<string, ComponentProps<typeof MaterialIcons>['name']>;
 type IconSymbolName = keyof typeof MAPPING;
 
 /**
@@ -27,11 +27,12 @@ const MAPPING = {
   'star.outline': 'star-border',
   'star.fill': 'star',
   'shopping.cart.fill': 'shopping-cart',
+  'shopping.cart.checkout': 'shopping-cart-checkout',
   'filter.fill': 'filter-alt',
   'arrow.back': 'arrow-back-ios-new',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-} as IconMapping;
+} satisfies IconMapping;
 
 /**
  * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.

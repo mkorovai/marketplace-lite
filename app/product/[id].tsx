@@ -10,9 +10,15 @@ import { useLocalSearchParams } from 'expo-router';
 // zustand
 import { useShallow } from 'zustand/react/shallow';
 
-// hooks
+// api
 import { useProduct } from '@/api/useProduct';
+
+// store
 import { useCartStore } from '@/store/useCartStore';
+
+// hooks
+import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+import { useCartIcon } from '@/hooks/useCartIcon';
 
 // components
 import ProductScreenLayout from '@/components/layout/ProductScreenLayout';
@@ -37,9 +43,6 @@ export default function ProductDetailScreen() {
     addItem(data);
   };
 
-  // check the work of zustand
-  console.log('items > ', items);
-
   if (isLoading) {
     return (
       <ProductScreenLayout>
@@ -56,15 +59,14 @@ export default function ProductDetailScreen() {
     );
   }
 
-  const {
-    title,
-    category,
-    price,
-    discountPercentage = 0,
-    reviews = [],
-    thumbnail,
-    description,
-  } = data;
+  const { price, discountPercentage = 0, thumbnail, description } = data;
+
+  const newPrice = useDiscountedPrice(price, discountPercentage);
+
+  const isInCart = items.some((item) => item.id === data.id);
+  const iconName = useCartIcon(isInCart);
+
+  const cartButtonText = isInCart ? 'In the Cart' : `Add to Cart - ${newPrice.toFixed(2)}`;
 
   return (
     <ProductScreenLayout padded={false}>
@@ -77,11 +79,7 @@ export default function ProductDetailScreen() {
           }}
         />
         <ProductInfo
-          title={title}
-          category={category}
-          price={price}
-          discountPercentage={discountPercentage}
-          reviews={reviews}
+          product={data}
           content={
             <>
               <Divider />
@@ -90,15 +88,21 @@ export default function ProductDetailScreen() {
                 <ThemedText type="default">{description}</ThemedText>
               </ThemedView>
               <Divider />
-              <Pressable style={styles.cartButton as ViewStyle} onPress={handleAddItem}>
+              <Pressable
+                style={[styles.cartButton, isInCart && styles.cartButtonInCart] as ViewStyle}
+                onPress={handleAddItem}
+              >
                 <IconSymbol
-                  name="shopping.cart.fill"
+                  name={iconName}
                   size={18}
                   color="#fff"
                   style={styles.shoppingCartIcon}
                 />
-                <ThemedText type="default" style={styles.cartButtonText}>
-                  Add to Cart - ${price.toFixed(2)}
+                <ThemedText
+                  type="default"
+                  style={[styles.cartButtonText, isInCart && styles.cartButtonTextInCart]}
+                >
+                  {cartButtonText}
                 </ThemedText>
               </Pressable>
             </>
@@ -124,10 +128,17 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
     paddingHorizontal: 12,
     backgroundColor: '#0F172A',
   },
+  cartButtonInCart: {
+    borderColor: '#16A34A',
+    backgroundColor: '#16A34A',
+  },
   shoppingCartIcon: {
     paddingRight: 6,
   },
   cartButtonText: {
     color: '#fff',
+  },
+  cartButtonTextInCart: {
+    fontWeight: '600',
   },
 });

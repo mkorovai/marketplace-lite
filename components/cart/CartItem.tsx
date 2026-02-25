@@ -4,12 +4,15 @@ import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-n
 // zustand
 import { useShallow } from 'zustand/react/shallow';
 
+// store
+import { useCartStore } from '@/store/useCartStore';
+
+// hooks
+import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
-
-// store
-import { useCartStore } from '@/store/useCartStore';
 
 // types
 import { CartItem as Item } from '@/types/cart';
@@ -19,8 +22,9 @@ type Props = {
 };
 
 export default function CartItem({ data }: Props) {
-  const { id, title, price, quantity } = data;
+  const { id, title, price, discountPercentage = 0, quantity } = data;
 
+  const newPrice = useDiscountedPrice(price, discountPercentage);
   const { increment, decrement, removeItem } = useCartStore(
     useShallow((state) => ({
       increment: state.increment,
@@ -39,7 +43,7 @@ export default function CartItem({ data }: Props) {
         <ThemedText numberOfLines={2} type="defaultSemiBold" style={styles.title}>
           {title}
         </ThemedText>
-        <ThemedText type="defaultSemiBold">${price}</ThemedText>
+        <ThemedText type="defaultSemiBold">${newPrice}</ThemedText>
       </ThemedView>
       <ThemedView style={styles.actions}>
         <Pressable style={styles.button} onPress={handleDecrement}>
