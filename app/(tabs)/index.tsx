@@ -15,7 +15,7 @@ import { useProducts } from '@/api/useProducts';
 import { useHomeFilters } from '@/hooks/useHomeFilters';
 
 export default function HomeScreen() {
-  const { data, isLoading, error, refetch } = useProducts();
+  const { data, isLoading, isFetching, error, refetch } = useProducts();
   const { search, setSearch, category, setCategory, filteredProducts } = useHomeFilters(
     data?.products ?? [],
   );
@@ -47,7 +47,7 @@ export default function HomeScreen() {
         />
         <Filters count={filteredProducts.length} />
       </ThemedView>
-      <ProductList products={filteredProducts} />
+      <ProductList isFetching={isFetching} products={filteredProducts} onRetry={refetch} />
     </ScreenLayout>
   );
 }

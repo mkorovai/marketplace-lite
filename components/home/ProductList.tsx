@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, Pressable, FlatList } from 'react-native';
+import { StyleSheet, ViewStyle, Pressable, FlatList, RefreshControl } from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -14,10 +14,12 @@ import ProductCard from '@/components/product/ProductCard';
 import { Product } from '@/types/product';
 
 type Props = {
+  isFetching: boolean;
   products: Product[];
+  onRetry?: () => void;
 };
 
-export default function ProductList({ products }: Props) {
+export default function ProductList({ isFetching, products, onRetry }: Props) {
   const router = useRouter();
 
   return (
@@ -35,6 +37,7 @@ export default function ProductList({ products }: Props) {
           <ProductCard product={item} />
         </Pressable>
       )}
+      refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRetry} />}
     />
   );
 }
