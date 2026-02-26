@@ -38,6 +38,10 @@ export default function ProductDetailScreen() {
     useShallow((state) => ({ items: state.items, addItem: state.addItem })),
   );
 
+  const newPrice = useDiscountedPrice(data?.price ?? 0, data?.discountPercentage ?? 0);
+  const isInCart = !!data && items.some((item) => item.id === data.id);
+  const iconName = useCartIcon(isInCart);
+
   const handleAddItem = () => {
     if (!data) return;
     addItem(data);
@@ -59,13 +63,7 @@ export default function ProductDetailScreen() {
     );
   }
 
-  const { price, discountPercentage = 0, thumbnail, description } = data;
-
-  const newPrice = useDiscountedPrice(price, discountPercentage);
-
-  const isInCart = items.some((item) => item.id === data.id);
-  const iconName = useCartIcon(isInCart);
-
+  const { discountPercentage = 0, thumbnail, description } = data;
   const cartButtonText = isInCart ? 'In the Cart' : `Add to Cart - ${newPrice.toFixed(2)}`;
 
   return (
