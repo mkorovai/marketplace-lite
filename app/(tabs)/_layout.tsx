@@ -4,18 +4,22 @@ import React from 'react';
 // expo
 import { Tabs } from 'expo-router';
 
-// components
-import HapticTab from '@/components/navigation/HapticTab';
-import IconSymbol from '@/components/ui/IconSymbol';
+// store
+import { useCartStore, CartState } from '@/store/useCartStore';
 
 // hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
+
+// components
+import HapticTab from '@/components/navigation/HapticTab';
+import IconSymbol from '@/components/ui/IconSymbol';
 
 // constants
 import { Colors } from '@/constants/theme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const totalItems = useCartStore((state: CartState) => state.totalItems);
 
   return (
     <Tabs
@@ -37,6 +41,7 @@ export default function TabLayout() {
         options={{
           title: 'Cart',
           tabBarIcon: ({ color }) => <IconSymbol name="cart.fill" size={28} color={color} />,
+          tabBarBadge: totalItems > 0 ? totalItems : undefined,
         }}
       />
       <Tabs.Screen

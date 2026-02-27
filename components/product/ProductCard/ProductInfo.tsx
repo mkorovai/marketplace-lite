@@ -8,7 +8,7 @@ import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-n
 import { useShallow } from 'zustand/react/shallow';
 
 // store
-import { useCartStore } from '@/store/useCartStore';
+import { useCartStore, CartState } from '@/store/useCartStore';
 
 // hooks
 import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
@@ -37,7 +37,7 @@ export default function ProductInfo(props: Props) {
 
   const newPrice = useDiscountedPrice(price, discountPercentage);
   const { items, addItem } = useCartStore(
-    useShallow((state) => ({ items: state.items, addItem: state.addItem })),
+    useShallow((state: CartState) => ({ items: state.items, addItem: state.addItem })),
   );
 
   const isInCart = items.some((item) => item.id === product.id);

@@ -14,7 +14,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useProduct } from '@/api/useProduct';
 
 // store
-import { useCartStore } from '@/store/useCartStore';
+import { useCartStore, CartState } from '@/store/useCartStore';
 
 // hooks
 import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
@@ -35,7 +35,7 @@ export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams();
   const { data, isLoading, error, refetch } = useProduct(id);
   const { items, addItem } = useCartStore(
-    useShallow((state) => ({ items: state.items, addItem: state.addItem })),
+    useShallow((state: CartState) => ({ items: state.items, addItem: state.addItem })),
   );
 
   const newPrice = useDiscountedPrice(data?.price ?? 0, data?.discountPercentage ?? 0);
