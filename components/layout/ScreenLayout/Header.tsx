@@ -8,7 +8,7 @@ import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-n
 import { useRouter } from 'expo-router';
 
 // store
-import { useCartStore } from '@/store/useCartStore';
+import { useCartStore, CartState } from '@/store/useCartStore';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -17,7 +17,7 @@ import IconSymbol from '@/components/ui/IconSymbol';
 
 export default function Header() {
   const router = useRouter();
-  const totalItems = useCartStore((state) => state.totalItems);
+  const totalItems = useCartStore((state: CartState) => state.totalItems);
   const formattedTotalItems = totalItems > 99 ? '99+' : totalItems.toString();
 
   return (

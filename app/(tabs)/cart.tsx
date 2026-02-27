@@ -4,17 +4,17 @@ import React from 'react';
 // react-native
 import { StyleSheet, ViewStyle, FlatList, Pressable } from 'react-native';
 
+// store
+import { useCartStore, CartState } from '@/store/useCartStore';
+
 // components
 import ScreenLayout from '@/components/layout/ScreenLayout';
 import EmptyCart from '@/components/cart/EmptyCart';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
 
-// store
-import { useCartStore } from '@/store/useCartStore';
-
 export default function CartScreen() {
-  const items = useCartStore((state) => state.items);
+  const items = useCartStore((state: CartState) => state.items);
 
   if (items.length === 0) {
     return (

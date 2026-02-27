@@ -12,7 +12,7 @@ import { calculateTotals } from '@/store/cart.utils';
 import { CartItem } from '@/types/cart';
 import { Product } from '@/types/product';
 
-type CartState = {
+export type CartState = {
   items: CartItem[];
 
   totalItems: number;

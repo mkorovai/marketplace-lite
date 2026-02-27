@@ -4,16 +4,16 @@ import { StyleSheet } from 'react-native';
 // zustand
 import { useShallow } from 'zustand/react/shallow';
 
+// store
+import { useCartStore, CartState } from '@/store/useCartStore';
+
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 
-// store
-import { useCartStore } from '@/store/useCartStore';
-
 export default function CartSummary() {
   const { totalItems, totalPrice } = useCartStore(
-    useShallow((state) => ({
+    useShallow((state: CartState) => ({
       totalItems: state.totalItems,
       totalPrice: state.totalPrice,
     })),
