@@ -95,7 +95,6 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
   root: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
     padding: 16,
   },
   categoryText: {
