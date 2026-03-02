@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, ScrollView } from 'react-native';
 
 // expo
 import { useLocalSearchParams } from 'expo-router';
@@ -16,10 +16,6 @@ import { useProduct } from '@/api/useProduct';
 // store
 import { useCartStore, CartState } from '@/store/useCartStore';
 
-// hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
-import { useCartIcon } from '@/hooks/useCartIcon';
-
 // components
 import ProductScreenLayout from '@/components/layout/ProductScreenLayout';
 import LoadingState from '@/components/feedback/LoadingState';
@@ -29,7 +25,7 @@ import ProductInfo from '@/components/product/ProductCard/ProductInfo';
 import Divider from '@/components/ui/Divider';
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
-import IconSymbol from '@/components/ui/IconSymbol';
+import StickyCTA from '@/components/product/StickyCTA';
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -38,9 +34,7 @@ export default function ProductDetailScreen() {
     useShallow((state: CartState) => ({ items: state.items, addItem: state.addItem })),
   );
 
-  const newPrice = useDiscountedPrice(data?.price ?? 0, data?.discountPercentage ?? 0);
   const isInCart = !!data && items.some((item) => item.id === data.id);
-  const iconName = useCartIcon(isInCart);
 
   const handleAddItem = () => {
     if (!data) return;
@@ -63,12 +57,11 @@ export default function ProductDetailScreen() {
     );
   }
 
-  const { discountPercentage = 0, thumbnail, description } = data;
-  const cartButtonText = isInCart ? 'In the Cart' : `Add to Cart - ${newPrice.toFixed(2)}`;
+  const { price, discountPercentage = 0, thumbnail, description } = data;
 
   return (
     <ProductScreenLayout padded={false}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 72 }}>
         <ProductImage
           thumbnail={thumbnail}
           discountPercentage={discountPercentage}
@@ -85,28 +78,16 @@ export default function ProductDetailScreen() {
                 <ThemedText type="defaultSemiBold">Description</ThemedText>
                 <ThemedText type="default">{description}</ThemedText>
               </ThemedView>
-              <Divider />
-              <Pressable
-                style={[styles.cartButton, isInCart && styles.cartButtonInCart] as ViewStyle}
-                onPress={handleAddItem}
-              >
-                <IconSymbol
-                  name={iconName}
-                  size={18}
-                  color="#fff"
-                  style={styles.shoppingCartIcon}
-                />
-                <ThemedText
-                  type="default"
-                  style={[styles.cartButtonText, isInCart && styles.cartButtonTextInCart]}
-                >
-                  {cartButtonText}
-                </ThemedText>
-              </Pressable>
             </>
           }
         />
       </ScrollView>
+      <StickyCTA
+        isInCart={isInCart}
+        price={price}
+        discountPercentage={discountPercentage}
+        onPress={handleAddItem}
+      />
     </ProductScreenLayout>
   );
 }
@@ -114,29 +95,5 @@ export default function ProductDetailScreen() {
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   customImage: {
     height: 280,
-  },
-  cartButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#0F172A',
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    backgroundColor: '#0F172A',
-  },
-  cartButtonInCart: {
-    borderColor: '#16A34A',
-    backgroundColor: '#16A34A',
-  },
-  shoppingCartIcon: {
-    paddingRight: 6,
-  },
-  cartButtonText: {
-    color: '#fff',
-  },
-  cartButtonTextInCart: {
-    fontWeight: '600',
   },
 });
