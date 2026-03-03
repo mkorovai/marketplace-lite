@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 // expo
 import { useLocalSearchParams } from 'expo-router';
@@ -20,7 +20,7 @@ import { useCartStore, CartState } from '@/store/useCartStore';
 import ProductScreenLayout from '@/components/layout/ProductScreenLayout';
 import LoadingState from '@/components/feedback/LoadingState';
 import ErrorState from '@/components/feedback/ErrorState';
-import ProductImage from '@/components/product/ProductCard/ProductImage';
+import ProductGallery from '@/components/product/ProductGallery';
 import ProductInfo from '@/components/product/ProductCard/ProductInfo';
 import Divider from '@/components/ui/Divider';
 import ThemedView from '@/components/ui/ThemedView';
@@ -57,18 +57,12 @@ export default function ProductDetailScreen() {
     );
   }
 
-  const { price, discountPercentage = 0, thumbnail, description } = data;
+  const { price, discountPercentage = 0, images, thumbnail, description } = data;
 
   return (
     <ProductScreenLayout padded={false}>
       <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 72 }}>
-        <ProductImage
-          thumbnail={thumbnail}
-          discountPercentage={discountPercentage}
-          styles={{
-            image: styles.customImage,
-          }}
-        />
+        <ProductGallery discountPercentage={discountPercentage} images={images ?? [thumbnail]} />
         <ProductInfo
           product={data}
           content={
@@ -91,9 +85,3 @@ export default function ProductDetailScreen() {
     </ProductScreenLayout>
   );
 }
-
-const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
-  customImage: {
-    height: 280,
-  },
-});
