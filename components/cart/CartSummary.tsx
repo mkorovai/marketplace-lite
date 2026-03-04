@@ -1,5 +1,8 @@
 // react-native
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+
+// expo
+import { useRouter } from 'expo-router';
 
 // zustand
 import { useShallow } from 'zustand/react/shallow';
@@ -12,6 +15,7 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 
 export default function CartSummary() {
+  const router = useRouter();
   const { totalItems, totalPrice } = useCartStore(
     useShallow((state: CartState) => ({
       totalItems: state.totalItems,
@@ -21,17 +25,36 @@ export default function CartSummary() {
 
   return (
     <ThemedView style={styles.root}>
-      <ThemedText>{totalItems} items</ThemedText>
-      <ThemedText>${totalPrice}</ThemedText>
+      <ThemedView>
+        <ThemedText>{totalItems} items</ThemedText>
+        <ThemedText>${totalPrice}</ThemedText>
+      </ThemedView>
+      <ThemedView>
+        <Pressable style={styles.button as ViewStyle} onPress={() => router.push('/checkout')}>
+          <ThemedText style={styles.buttonText}>Checkout</ThemedText>
+        </Pressable>
+      </ThemedView>
     </ThemedView>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 16,
     borderTopWidth: 1,
     borderColor: '#E5E5EA',
+  },
+  button: {
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#0F172A',
+  },
+  buttonText: {
+    fontWeight: '600',
+    color: '#fff',
   },
 });

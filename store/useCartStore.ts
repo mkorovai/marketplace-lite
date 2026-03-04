@@ -22,6 +22,7 @@ export type CartState = {
   removeItem: (id: number) => void;
   increment: (id: number) => void;
   decrement: (id: number) => void;
+  clearCart: () => void;
 };
 
 export const useCartStore = create(
@@ -83,6 +84,12 @@ export const useCartStore = create(
           };
         });
       },
+      clearCart: () =>
+        set({
+          items: [],
+          totalItems: 0,
+          totalPrice: 0,
+        }),
     }),
     {
       name: 'cart-storage',
