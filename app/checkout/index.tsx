@@ -31,7 +31,7 @@ export default function CheckoutScreen() {
 
   const handleConfirm = () => {
     clearCart();
-    router.replace('/');
+    router.replace('/order-success');
   };
 
   return (
