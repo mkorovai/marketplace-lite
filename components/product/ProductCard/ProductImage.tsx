@@ -2,20 +2,12 @@
 import React from 'react';
 
 // react-native
-import {
-  StyleSheet,
-  StyleProp,
-  ImageStyle,
-  ViewStyle,
-  TextStyle,
-  Image,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, StyleProp, ViewStyle, TextStyle, ImageStyle, Image } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
-import IconSymbol from '@/components/ui/IconSymbol';
+import FavoriteButton from '@/components/product/FavoriteButton';
 
 type ProductImageStyles = {
   image?: StyleProp<ImageStyle>;
@@ -23,22 +15,32 @@ type ProductImageStyles = {
 
 type Props = {
   showFavorite?: boolean;
+  id: number;
   thumbnail: string;
   discountPercentage?: number;
   styles?: ProductImageStyles;
 };
 
 export default function ProductImage(props: Props) {
-  const { showFavorite = false, thumbnail, discountPercentage = 0, styles: customStyles } = props;
+  const {
+    showFavorite = false,
+    id,
+    thumbnail,
+    discountPercentage = 0,
+    styles: customStyles,
+  } = props;
   const isDiscountPercentage = discountPercentage > 0;
 
   return (
     <ThemedView style={styles.root}>
       <Image style={[styles.image, customStyles?.image]} source={{ uri: thumbnail }} />
       {showFavorite && (
-        <Pressable style={styles.favorite}>
-          <IconSymbol name="heart.outline" size={18} color="#0F172A" />
-        </Pressable>
+        <FavoriteButton
+          productId={id}
+          styles={{
+            favorite: styles.favorite,
+          }}
+        />
       )}
       {isDiscountPercentage && (
         <ThemedView style={styles.discount}>
@@ -63,12 +65,6 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
     position: 'absolute',
     top: 8,
     left: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#fff',
   },
   discount: {
     position: 'absolute',
