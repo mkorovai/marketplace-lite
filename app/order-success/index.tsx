@@ -1,9 +1,9 @@
 // react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, TextStyle, ViewStyle, ImageStyle, Pressable } from "react-native";
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
 
- // expo
-import { useRouter } from "expo-router";
+// expo
+import { useRouter } from 'expo-router';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -17,7 +17,7 @@ export default function OrderSuccessScreen() {
       <ThemedView style={styles.root}>
         <ThemedText type="lg">🎉 Order placed</ThemedText>
         <ThemedText>Your order was successfully created.</ThemedText>
-        <Pressable style={styles.button} onPress={() => router.replace("/")}>
+        <Pressable style={styles.button} onPress={() => router.replace('/')}>
           <ThemedText type="defaultSemiBold" style={styles.buttonText}>
             Continue shopping
           </ThemedText>
