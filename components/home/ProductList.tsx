@@ -8,6 +8,7 @@ import { StyleSheet, ViewStyle, Pressable, FlatList, RefreshControl } from 'reac
 import { useRouter } from 'expo-router';
 
 // components
+import EmptyState from '@/components/ui/EmptyState';
 import ProductCard from '@/components/product/ProductCard';
 
 // types
@@ -21,6 +22,10 @@ type Props = {
 
 export default function ProductList({ isFetching, products, onRetry }: Props) {
   const router = useRouter();
+
+  if (!products.length) {
+    return <EmptyState title="No products found" description="Try another search" />;
+  }
 
   return (
     <FlatList

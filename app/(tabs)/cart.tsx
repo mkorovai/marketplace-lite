@@ -9,7 +9,7 @@ import { useCartStore, CartState } from '@/store/useCartStore';
 
 // components
 import ScreenLayout from '@/components/layout/ScreenLayout';
-import EmptyCart from '@/components/cart/EmptyCart';
+import EmptyState from '@/components/ui/EmptyState';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
 
@@ -19,7 +19,7 @@ export default function CartScreen() {
   if (items.length === 0) {
     return (
       <ScreenLayout>
-        <EmptyCart />
+        <EmptyState title="Your cart is empty" description="Add products to get started" />
       </ScreenLayout>
     );
   }
