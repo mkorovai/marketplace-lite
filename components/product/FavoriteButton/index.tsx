@@ -10,6 +10,9 @@ import { useShallow } from 'zustand/react/shallow';
 // store
 import { useFavoritesStore, FavoritesState } from '@/store/useFavoritesStore';
 
+// service
+import { showSuccess, showInfo } from '@/lib/toast/toast';
+
 // components
 import IconSymbol from '@/components/ui/IconSymbol';
 
@@ -20,10 +23,11 @@ type FavoriteButtonStyles = {
 
 type Props = {
   productId: number;
+  title: string;
   styles?: FavoriteButtonStyles;
 };
 
-export default function FavoriteButton({ productId, styles: customStyles }: Props) {
+export default function FavoriteButton({ productId, title, styles: customStyles }: Props) {
   const { isFavorite, toggle } = useFavoritesStore(
     useShallow((state: FavoritesState) => ({
       isFavorite: state.ids.includes(productId),
@@ -33,7 +37,14 @@ export default function FavoriteButton({ productId, styles: customStyles }: Prop
 
   const iconName = isFavorite ? 'heart.fill' : 'heart.outline';
 
-  const handlePress = () => toggle(productId);
+  const handlePress = () => {
+    const nextIsFavorite = !isFavorite;
+    const toast = nextIsFavorite ? showSuccess : showInfo;
+    const toastText = nextIsFavorite ? 'Added to favorites' : 'Removed from favorites';
+
+    toggle(productId);
+    toast(toastText, title);
+  };
 
   return (
     <Pressable style={[styles.root, customStyles?.favorite]} onPress={handlePress}>

@@ -16,6 +16,7 @@ type ProductImageStyles = {
 type Props = {
   showFavorite?: boolean;
   id: number;
+  title: string;
   thumbnail: string;
   discountPercentage?: number;
   styles?: ProductImageStyles;
@@ -25,6 +26,7 @@ export default function ProductImage(props: Props) {
   const {
     showFavorite = false,
     id,
+    title,
     thumbnail,
     discountPercentage = 0,
     styles: customStyles,
@@ -37,6 +39,7 @@ export default function ProductImage(props: Props) {
       {showFavorite && (
         <FavoriteButton
           productId={id}
+          title={title}
           styles={{
             favorite: styles.favorite,
           }}

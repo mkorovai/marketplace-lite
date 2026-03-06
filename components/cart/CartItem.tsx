@@ -10,6 +10,9 @@ import { useCartStore, CartState } from '@/store/useCartStore';
 // hooks
 import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
 
+// service
+import { showSuccess } from '@/lib/toast/toast';
+
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
@@ -35,7 +38,10 @@ export default function CartItem({ data }: Props) {
 
   const handleDecrement = () => decrement(id);
   const handleIncrement = () => increment(id);
-  const handleRemoveItem = () => removeItem(id);
+  const handleRemoveItem = () => {
+    removeItem(id);
+    showSuccess('Removed from cart', title);
+  };
 
   return (
     <ThemedView style={styles.root}>

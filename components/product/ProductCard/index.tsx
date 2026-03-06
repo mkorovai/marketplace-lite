@@ -17,13 +17,14 @@ type Props = {
 };
 
 export default function ProductCard({ product }: Props) {
-  const { id, discountPercentage = 0, thumbnail } = product;
+  const { id, title, discountPercentage = 0, thumbnail } = product;
 
   return (
     <ThemedView style={styles.root}>
       <ProductImage
         showFavorite
         id={id}
+        title={title}
         thumbnail={thumbnail}
         discountPercentage={discountPercentage}
       />

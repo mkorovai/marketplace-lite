@@ -3,6 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 
 // react-native
 import 'react-native-reanimated';
+import Toast from 'react-native-toast-message';
 
 // expo
 import { Stack } from 'expo-router';
@@ -13,6 +14,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
+
+// configs
+import { toastConfig } from '@/lib/toast/toastConfig';
 
 // Set tabs as the initial navigation anchor
 export const unstable_settings = {
@@ -40,6 +44,7 @@ export default function RootLayout() {
           <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
         </Stack>
         <StatusBar style="auto" />
+        <Toast config={toastConfig} />
       </ThemeProvider>
     </QueryClientProvider>
   );

@@ -16,6 +16,9 @@ import { useProduct } from '@/api/useProduct';
 // store
 import { useCartStore, CartState } from '@/store/useCartStore';
 
+// service
+import { showSuccess } from '@/lib/toast/toast';
+
 // components
 import ProductScreenLayout from '@/components/layout/ProductScreenLayout';
 import LoadingState from '@/components/feedback/LoadingState';
@@ -39,6 +42,7 @@ export default function ProductDetailScreen() {
   const handleAddItem = () => {
     if (!data) return;
     addItem(data);
+    showSuccess('Added to cart', data.title);
   };
 
   if (isLoading) {

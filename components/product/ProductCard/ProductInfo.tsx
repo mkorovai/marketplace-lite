@@ -14,6 +14,9 @@ import { useCartStore, CartState } from '@/store/useCartStore';
 import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
 import { useCartIcon } from '@/hooks/useCartIcon';
 
+// service
+import { showSuccess } from '@/lib/toast/toast';
+
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
@@ -46,6 +49,7 @@ export default function ProductInfo(props: Props) {
   const handleAddItem = () => {
     if (!product) return;
     addItem(product);
+    showSuccess('Added to cart', title);
   };
 
   return (
