@@ -1,1 +1,1 @@
-export const CATEGORIES: string[] = ['All', 'Electronics', 'Fashion', 'Home'];
+export const CATEGORIES: string[] = ['all', 'beauty', 'fragrances', 'furniture', 'groceries'];

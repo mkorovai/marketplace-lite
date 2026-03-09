@@ -1,8 +1,9 @@
 // base
 import React from 'react';
+import _ from 'lodash';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, TextInput, Pressable } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle, TextInput, ScrollView, Pressable } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -29,7 +30,11 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
           placeholder="Search products..."
         />
       </ThemedView>
-      <ThemedView style={styles.categories}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categories}
+      >
         {CATEGORIES.map((item) => {
           const active = item === category;
           return (
@@ -39,12 +44,12 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
               onPress={() => onCategoryChange(item)}
             >
               <ThemedText type="default" style={active && styles.categoryTextActive}>
-                {item}
+                {_.capitalize(item)}
               </ThemedText>
             </Pressable>
           );
         })}
-      </ThemedView>
+      </ScrollView>
       <ThemedView style={styles.separator} />
     </ThemedView>
   );
