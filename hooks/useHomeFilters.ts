@@ -3,8 +3,7 @@ import { useMemo, useState } from 'react';
 
 // types
 import { Product } from '@/types/product';
-
-type Category = 'all' | 'beauty' | 'fragrances' | 'furniture' | 'groceries';
+import { Category } from '@/types/filters';
 
 export function useHomeFilters(products: Product[]) {
   const [search, setSearch] = useState('');

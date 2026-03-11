@@ -1,6 +1,17 @@
 // base
 import React from 'react';
 
+// api
+import { useProducts } from '@/api/useProducts';
+
+// hooks
+import { useHomeFilters } from '@/hooks/useHomeFilters';
+import { useDrawer } from '@/hooks/useDrawer';
+import { useFiltersDrawer } from '@/hooks/useFiltersDrawer';
+
+// utils
+import { applyFiltersToProducts } from '@/utils/filterProducts';
+
 // components
 import ScreenLayout from '@/components/layout/ScreenLayout';
 import LoadingState from '@/components/feedback/LoadingState';
@@ -9,16 +20,17 @@ import ThemedView from '@/components/ui/ThemedView';
 import Header from '@/components/home/Header';
 import Filters from '@/components/home/Filters';
 import ProductList from '@/components/home/ProductList';
-
-// hooks
-import { useProducts } from '@/api/useProducts';
-import { useHomeFilters } from '@/hooks/useHomeFilters';
+import FiltersDrawer from '@/components/home/FiltersDrawer';
 
 export default function HomeScreen() {
   const { data, isLoading, isFetching, error, refetch } = useProducts();
   const { search, setSearch, category, setCategory, filteredProducts } = useHomeFilters(
     data?.products ?? [],
   );
+
+  const { isOpen, openDrawer, closeDrawer } = useDrawer();
+  const { filters, applyFilters, resetFilters } = useFiltersDrawer();
+  const displayedProducts = applyFiltersToProducts(filteredProducts, filters);
 
   if (isLoading) {
     return (
@@ -28,7 +40,7 @@ export default function HomeScreen() {
     );
   }
 
-  if (error || !filteredProducts) {
+  if (error) {
     return (
       <ScreenLayout>
         <ErrorState onRetry={refetch} />
@@ -42,12 +54,19 @@ export default function HomeScreen() {
         <Header
           search={search}
           category={category}
-          onSearchChange={setSearch}
-          onCategoryChange={setCategory}
+          setSearch={setSearch}
+          setCategory={setCategory}
         />
-        <Filters count={filteredProducts.length} />
+        <Filters count={displayedProducts.length} openDrawer={openDrawer} />
       </ThemedView>
-      <ProductList isFetching={isFetching} products={filteredProducts} onRetry={refetch} />
+      <ProductList isFetching={isFetching} products={displayedProducts} onRetry={refetch} />
+      <FiltersDrawer
+        visible={isOpen}
+        filters={filters}
+        onClose={closeDrawer}
+        onApply={applyFilters}
+        onReset={resetFilters}
+      />
     </ScreenLayout>
   );
 }
