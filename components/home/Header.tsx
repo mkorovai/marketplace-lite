@@ -1,9 +1,12 @@
 // base
 import React from 'react';
+
+// libs
 import _ from 'lodash';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, TextInput, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, TextInput, ScrollView, Pressable } from 'react-native';
+import type { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -12,20 +15,26 @@ import ThemedText from '@/components/ui/ThemedText';
 // constants
 import { CATEGORIES } from '@/data/categories';
 
+// types
+import type { Category } from '@/types/filters';
+
 type Props = {
   search: string;
-  category: string;
-  onSearchChange: (v: string) => void;
-  onCategoryChange: (v: string) => void;
+  category: Category;
+  setSearch: (search: string) => void;
+  setCategory: (category: Category) => void;
 };
 
-export default function Header({ search, category, onSearchChange, onCategoryChange }: Props) {
+export default function Header({ search, category, setSearch, setCategory }: Props) {
+  const changeSearch = (value: string) => setSearch(_.trimStart(value));
+  const changeCategory = (category) => () => setCategory(category);
+
   return (
     <ThemedView>
       <ThemedView style={styles.searchWrapper}>
         <TextInput
           style={styles.search}
-          onChangeText={onSearchChange}
+          onChangeText={changeSearch}
           value={search}
           placeholder="Search products..."
         />
@@ -41,7 +50,7 @@ export default function Header({ search, category, onSearchChange, onCategoryCha
             <Pressable
               key={`category-${item}`}
               style={[styles.category, active && styles.categoryActive] as ViewStyle}
-              onPress={() => onCategoryChange(item)}
+              onPress={changeCategory(item)}
             >
               <ThemedText type="default" style={active && styles.categoryTextActive}>
                 {_.capitalize(item)}
