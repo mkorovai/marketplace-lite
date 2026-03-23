@@ -30,7 +30,7 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import StickyCTA from '@/components/product/StickyCTA';
 
-export default function ProductDetailScreen() {
+const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const { data, isLoading, error, refetch } = useProduct(id);
   const { items, addItem } = useCartStore(
@@ -88,4 +88,6 @@ export default function ProductDetailScreen() {
       />
     </ProductScreenLayout>
   );
-}
+};
+
+export default ProductDetailScreen;

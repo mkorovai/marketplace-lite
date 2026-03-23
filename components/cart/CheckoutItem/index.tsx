@@ -2,10 +2,10 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Image } from 'react-native';
+import { StyleSheet, Image, type ViewStyle, type TextStyle, type ImageStyle } from 'react-native';
 
 // hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -18,8 +18,8 @@ type Props = {
   data: CartItem;
 };
 
-export default function CheckoutItem({ data }: Props) {
-  const newPrice = useDiscountedPrice(data.price, data.discountPercentage ?? 0);
+const CheckoutItem = ({ data }: Props) => {
+  const newPrice = getDiscountedPrice(data.price, data.discountPercentage ?? 0);
 
   return (
     <ThemedView style={styles.root}>
@@ -34,7 +34,9 @@ export default function CheckoutItem({ data }: Props) {
       </ThemedView>
     </ThemedView>
   );
-}
+};
+
+export default CheckoutItem;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

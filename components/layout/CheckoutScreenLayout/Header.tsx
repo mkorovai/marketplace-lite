@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, Pressable } from 'react-native';
+import { StyleSheet, Pressable, type ViewStyle } from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -12,7 +12,7 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
 
-export default function Header() {
+const Header = () => {
   const router = useRouter();
 
   return (
@@ -23,7 +23,9 @@ export default function Header() {
       </Pressable>
     </ThemedView>
   );
-}
+};
+
+export default Header;
 
 const styles = StyleSheet.create({
   root: {

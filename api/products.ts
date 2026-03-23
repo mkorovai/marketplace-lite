@@ -5,7 +5,7 @@ import { apiGet } from './client';
 import { Product as ProductResponse } from '@/types/product';
 
 export type ProductsResponse = {
-  products: any[];
+  products: ProductResponse[];
 };
 
 // Fetch all products

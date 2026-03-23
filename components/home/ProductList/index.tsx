@@ -2,14 +2,14 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, Pressable, FlatList, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
 
 // components
 import EmptyState from '@/components/ui/EmptyState';
-import ProductCard from '@/components/product/ProductCard';
+import ProductListItem from '@/components/home/ProductList/ProductListItem';
 
 // types
 import { Product } from '@/types/product';
@@ -20,8 +20,12 @@ type Props = {
   onRetry?: () => void;
 };
 
-export default function ProductList({ isFetching, products, onRetry }: Props) {
+const ProductList = ({ isFetching, products, onRetry }: Props) => {
   const router = useRouter();
+
+  const handlePress = (id: number) => () => {
+    router.push({ pathname: '/product/[id]', params: { id } });
+  };
 
   if (!products.length) {
     return <EmptyState title="No products found" description="Try another search" />;
@@ -30,25 +34,15 @@ export default function ProductList({ isFetching, products, onRetry }: Props) {
   return (
     <FlatList
       data={products}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(product) => product.id.toString()}
       numColumns={2}
       columnWrapperStyle={{ gap: 16 }}
       contentContainerStyle={{ gap: 16, padding: 16 }}
-      renderItem={({ item }) => (
-        <Pressable
-          style={styles.pressable as ViewStyle}
-          onPress={() => router.push({ pathname: '/product/[id]', params: { id: item.id } })}
-        >
-          <ProductCard product={item} />
-        </Pressable>
-      )}
+      /* TODO check if there is a patch for react-native types */
+      renderItem={({ item }) => <ProductListItem product={item} onPress={handlePress(item.id)} />}
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRetry} />}
     />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  pressable: {
-    flex: 1,
-  },
-});
+export default ProductList;

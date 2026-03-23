@@ -1,5 +1,5 @@
 // hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
 
 // types
 import { CartItem } from '@/types/cart';
@@ -9,7 +9,7 @@ export const calculateTotals = (items: CartItem[]) => {
   const totalPrice = items
     .reduce((sum, item) => {
       const price = item.discountPercentage
-        ? useDiscountedPrice(item.price, item.discountPercentage)
+        ? getDiscountedPrice(item.price, item.discountPercentage)
         : item.price;
 
       return sum + price * item.quantity;

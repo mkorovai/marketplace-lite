@@ -2,7 +2,13 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // zustand
 import { useShallow } from 'zustand/react/shallow';
@@ -11,8 +17,8 @@ import { useShallow } from 'zustand/react/shallow';
 import { useCartStore, CartState } from '@/store/useCartStore';
 
 // hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
-import { useCartIcon } from '@/hooks/useCartIcon';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
+import { getCartIcon } from '@/utils/getCartIcon';
 
 // service
 import { showSuccess } from '@/lib/toast/toast';
@@ -31,20 +37,20 @@ type Props = {
   content?: React.ReactNode;
 };
 
-export default function ProductInfo(props: Props) {
+const ProductInfo = (props: Props) => {
   const { showCartButton = false, product, content } = props;
   const { title, category, price, discountPercentage = 0, reviews = [] } = product;
 
   const isDiscountPercentage = discountPercentage > 0;
   const reviewsCount = reviews.length;
 
-  const newPrice = useDiscountedPrice(price, discountPercentage);
+  const newPrice = getDiscountedPrice(price, discountPercentage);
   const { items, addItem } = useCartStore(
     useShallow((state: CartState) => ({ items: state.items, addItem: state.addItem })),
   );
 
   const isInCart = items.some((item) => item.id === product.id);
-  const iconName = useCartIcon(isInCart);
+  const iconName = getCartIcon(isInCart);
 
   const handleAddItem = () => {
     if (!product) return;
@@ -93,7 +99,9 @@ export default function ProductInfo(props: Props) {
       {content}
     </ThemedView>
   );
-}
+};
+
+export default ProductInfo;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

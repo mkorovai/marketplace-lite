@@ -1,5 +1,5 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { StyleSheet, type ViewStyle, type TextStyle, type ImageStyle } from 'react-native';
 
 // components
 import EmptyState from '@/components/ui/EmptyState';
@@ -13,7 +13,7 @@ type Props = {
   products: Product[];
 };
 
-export default function FavoritesScreen({ products }: Props) {
+const FavoritesScreen = ({ products }: Props) => {
   if (!products.length) {
     return <EmptyState title="No favorites yet" description="Tap ❤️ on products you like" />;
   }
@@ -23,7 +23,9 @@ export default function FavoritesScreen({ products }: Props) {
       <ThemedText>Favorites</ThemedText>
     </ThemedView>
   );
-}
+};
+
+export default FavoritesScreen;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

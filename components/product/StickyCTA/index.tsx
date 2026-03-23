@@ -2,11 +2,17 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
-import { useCartIcon } from '@/hooks/useCartIcon';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
+import { getCartIcon } from '@/utils/getCartIcon';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -20,11 +26,11 @@ type Props = {
   onPress: () => void;
 };
 
-export default function StickyCTA(props: Props) {
+const StickyCTA = (props: Props) => {
   const { isInCart, price, discountPercentage, onPress } = props;
 
-  const iconName = useCartIcon(isInCart);
-  const newPrice = useDiscountedPrice(price, discountPercentage);
+  const iconName = getCartIcon(isInCart);
+  const newPrice = getDiscountedPrice(price, discountPercentage);
   const cartButtonText = isInCart ? 'In the Cart' : `Add to Cart - ${newPrice.toFixed(2)}`;
 
   return (
@@ -43,7 +49,9 @@ export default function StickyCTA(props: Props) {
       </Pressable>
     </ThemedView>
   );
-}
+};
+
+export default StickyCTA;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

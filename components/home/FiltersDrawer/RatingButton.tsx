@@ -2,8 +2,13 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, Pressable } from 'react-native';
-import type { ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedText from '@/components/ui/ThemedText';

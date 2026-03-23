@@ -1,6 +1,12 @@
 // react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -9,7 +15,7 @@ import { useRouter } from 'expo-router';
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 
-export default function OrderSuccessScreen() {
+const OrderSuccessScreen = () => {
   const router = useRouter();
 
   return (
@@ -25,7 +31,9 @@ export default function OrderSuccessScreen() {
       </ThemedView>
     </SafeAreaView>
   );
-}
+};
+
+export default OrderSuccessScreen;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   safe: {

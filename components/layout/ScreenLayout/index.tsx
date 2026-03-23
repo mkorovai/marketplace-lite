@@ -15,11 +15,9 @@ type Props = {
   backgroundColor?: 'string';
 };
 
-export default function ScreenLayout({
-  children,
-  padded = true,
-  backgroundColor = '#F9FAFB',
-}: Props) {
+const ScreenLayout = (props: Props) => {
+  const { children, padded = true, backgroundColor } = props;
+
   return (
     <SafeAreaView style={styles.safe} edges={['top'] as const}>
       <Header />
@@ -28,7 +26,9 @@ export default function ScreenLayout({
       </ThemedView>
     </SafeAreaView>
   );
-}
+};
+
+export default ScreenLayout;
 
 const styles = StyleSheet.create({
   safe: {

@@ -13,14 +13,14 @@ type Props = {
   };
 };
 
-export default function ParallaxScreenLayout({
-  children,
-  headerImage,
-  headerBackgroundColor,
-}: Props) {
+const ParallaxScreenLayout = (props: Props) => {
+  const { children, headerImage, headerBackgroundColor } = props;
+
   return (
     <ParallaxScrollView headerImage={headerImage} headerBackgroundColor={headerBackgroundColor}>
       {children}
     </ParallaxScrollView>
   );
-}
+};
+
+export default ParallaxScreenLayout;

@@ -1,5 +1,11 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -12,9 +18,7 @@ type Props = {
   onPress?: () => void;
 };
 
-export default function EmptyState(props: Props) {
-  const { title, description, buttonText, onPress } = props;
-
+const EmptyState = ({ title, description, buttonText, onPress }: Props) => {
   return (
     <ThemedView style={styles.root}>
       <ThemedText type="defaultSemiBold" style={styles.title}>
@@ -32,7 +36,9 @@ export default function EmptyState(props: Props) {
       )}
     </ThemedView>
   );
-}
+};
+
+export default EmptyState;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

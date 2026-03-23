@@ -17,7 +17,7 @@ import IconSymbol from '@/components/ui/IconSymbol';
 // constants
 import { Colors } from '@/constants/theme';
 
-export default function TabLayout() {
+const TabLayout = () => {
   const colorScheme = useColorScheme();
   const totalItems = useCartStore((state: CartState) => state.totalItems);
 
@@ -53,4 +53,6 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;

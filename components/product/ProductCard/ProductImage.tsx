@@ -2,7 +2,14 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, StyleProp, ViewStyle, TextStyle, ImageStyle, Image } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  type StyleProp,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -22,7 +29,7 @@ type Props = {
   styles?: ProductImageStyles;
 };
 
-export default function ProductImage(props: Props) {
+const ProductImage = (props: Props) => {
   const {
     showFavorite = false,
     id,
@@ -54,7 +61,9 @@ export default function ProductImage(props: Props) {
       )}
     </ThemedView>
   );
-}
+};
+
+export default ProductImage;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {
