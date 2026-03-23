@@ -1,5 +1,11 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -14,7 +20,7 @@ import { useCartStore, CartState } from '@/store/useCartStore';
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 
-export default function CartSummary() {
+const CartSummary = () => {
   const router = useRouter();
   const { totalItems, totalPrice } = useCartStore(
     useShallow((state: CartState) => ({
@@ -36,7 +42,9 @@ export default function CartSummary() {
       </ThemedView>
     </ThemedView>
   );
-}
+};
+
+export default CartSummary;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

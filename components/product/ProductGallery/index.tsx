@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 // react-native
 import {
   StyleSheet,
-  ViewStyle,
-  TextStyle,
-  ImageStyle,
   Dimensions,
   FlatList,
   Image,
   View,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
 } from 'react-native';
 
 // components
@@ -26,7 +26,7 @@ type Props = {
   images: string[];
 };
 
-export default function ProductGallery(props: Props) {
+const ProductGallery = (props: Props) => {
   const { discountPercentage = 0, images } = props;
   const isDiscountPercentage = discountPercentage > 0;
 
@@ -50,6 +50,7 @@ export default function ProductGallery(props: Props) {
         onMomentumScrollEnd={(e) => {
           setIndex(Math.round(e.nativeEvent.contentOffset.x / width));
         }}
+        /* TODO check if there is a patch for react-native types */
         renderItem={({ item }) => <Image style={styles.image} source={{ uri: item }} />}
       />
       <ThemedView style={styles.dots}>
@@ -59,7 +60,9 @@ export default function ProductGallery(props: Props) {
       </ThemedView>
     </ThemedView>
   );
-}
+};
+
+export default ProductGallery;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

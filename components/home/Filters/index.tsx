@@ -2,8 +2,13 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, Pressable } from 'react-native';
-import type { ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -15,7 +20,7 @@ type Props = {
   openDrawer: () => void;
 };
 
-export default function Filters({ count, openDrawer }: Props) {
+const Filters = ({ count, openDrawer }: Props) => {
   return (
     <ThemedView style={styles.root}>
       {count > 0 && (
@@ -33,7 +38,9 @@ export default function Filters({ count, openDrawer }: Props) {
       </Pressable>
     </ThemedView>
   );
-}
+};
+
+export default Filters;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

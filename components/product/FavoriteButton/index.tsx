@@ -2,7 +2,14 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, StyleProp, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type StyleProp,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // zustand
 import { useShallow } from 'zustand/react/shallow';
@@ -27,7 +34,7 @@ type Props = {
   styles?: FavoriteButtonStyles;
 };
 
-export default function FavoriteButton({ productId, title, styles: customStyles }: Props) {
+const FavoriteButton = ({ productId, title, styles: customStyles }: Props) => {
   const { isFavorite, toggle } = useFavoritesStore(
     useShallow((state: FavoritesState) => ({
       isFavorite: state.ids.includes(productId),
@@ -51,7 +58,9 @@ export default function FavoriteButton({ productId, title, styles: customStyles 
       <IconSymbol name={iconName} size={18} color="#0F172A" />
     </Pressable>
   );
-}
+};
+
+export default FavoriteButton;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

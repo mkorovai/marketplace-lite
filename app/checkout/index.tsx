@@ -2,7 +2,14 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, FlatList, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -19,7 +26,7 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import CheckoutItem from '@/components/cart/CheckoutItem';
 
-export default function CheckoutScreen() {
+const CheckoutScreen = () => {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCartStore(
     useShallow((state: CartState) => ({
@@ -42,6 +49,7 @@ export default function CheckoutScreen() {
           data={items}
           keyExtractor={(item) => String(item.id)}
           contentContainerStyle={{ gap: 16, paddingVertical: 16 }}
+          /* TODO check if there is a patch for react-native types */
           renderItem={({ item }) => <CheckoutItem data={item} />}
         />
         <ThemedView style={styles.cta}>
@@ -53,7 +61,9 @@ export default function CheckoutScreen() {
       </ThemedView>
     </CheckoutScreenLayout>
   );
-}
+};
+
+export default CheckoutScreen;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

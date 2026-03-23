@@ -7,22 +7,22 @@ import { Category } from '@/types/filters';
 
 export function useHomeFilters(products: Product[]) {
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<Category>('all');
+  const [activeCategory, setActiveCategory] = useState<Category>('all');
 
   const filteredProducts = useMemo(() => {
     return products.filter((item) => {
       const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = category === 'all' || item.category === category;
+      const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
 
       return matchesSearch && matchesCategory;
     });
-  }, [products, search, category]);
+  }, [products, search, activeCategory]);
 
   return {
     search,
     setSearch,
-    category,
-    setCategory,
+    activeCategory,
+    setActiveCategory,
     filteredProducts,
   };
 }

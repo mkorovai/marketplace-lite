@@ -6,7 +6,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 // utils
-import { calculateTotals } from '@/store/cart.utils';
+import { calculateTotals } from '@/utils/calculateTotals';
 
 // types
 import { CartItem } from '@/types/cart';

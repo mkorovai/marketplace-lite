@@ -22,12 +22,11 @@ import Filters from '@/components/home/Filters';
 import ProductList from '@/components/home/ProductList';
 import FiltersDrawer from '@/components/home/FiltersDrawer';
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   const { data, isLoading, isFetching, error, refetch } = useProducts();
-  const { search, setSearch, category, setCategory, filteredProducts } = useHomeFilters(
+  const { search, setSearch, activeCategory, setActiveCategory, filteredProducts } = useHomeFilters(
     data?.products ?? [],
   );
-
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
   const { filters, applyFilters, resetFilters } = useFiltersDrawer();
   const displayedProducts = applyFiltersToProducts(filteredProducts, filters);
@@ -53,9 +52,9 @@ export default function HomeScreen() {
       <ThemedView>
         <Header
           search={search}
-          category={category}
+          activeCategory={activeCategory}
           setSearch={setSearch}
-          setCategory={setCategory}
+          setActiveCategory={setActiveCategory}
         />
         <Filters count={displayedProducts.length} openDrawer={openDrawer} />
       </ThemedView>
@@ -69,4 +68,6 @@ export default function HomeScreen() {
       />
     </ScreenLayout>
   );
-}
+};
+
+export default HomeScreen;

@@ -9,7 +9,7 @@ import ParallaxScreenLayout from '@/components/layout/ParallaxScreenLayout';
 import ThemedText from '@/components/ui/ThemedText';
 import ThemedView from '@/components/ui/ThemedView';
 
-export default function ProfileScreen() {
+const ProfileScreen = () => {
   return (
     <ParallaxScreenLayout
       headerBackgroundColor={{ light: '#AAA0D1', dark: '#353227' }}
@@ -25,7 +25,9 @@ export default function ProfileScreen() {
       </ThemedView>
     </ParallaxScreenLayout>
   );
-}
+};
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   headerImage: {

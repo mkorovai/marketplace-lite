@@ -14,14 +14,16 @@ type Props = {
   padded?: boolean;
 };
 
-export default function CheckoutScreenLayout({ children, padded = true }: Props) {
+const CheckoutScreenLayout = ({ children, padded = true }: Props) => {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom'] as const}>
       <Header />
       <ThemedView style={[styles.container, padded && styles.padded]}>{children}</ThemedView>
     </SafeAreaView>
   );
-}
+};
+
+export default CheckoutScreenLayout;
 
 const styles = StyleSheet.create({
   safe: {

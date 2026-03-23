@@ -16,7 +16,7 @@ type Props = {
   product: Product;
 };
 
-export default function ProductCard({ product }: Props) {
+const ProductCard = ({ product }: Props) => {
   const { id, title, discountPercentage = 0, thumbnail } = product;
 
   return (
@@ -31,7 +31,9 @@ export default function ProductCard({ product }: Props) {
       <ProductInfo showCartButton product={product} />
     </ThemedView>
   );
-}
+};
+
+export default ProductCard;
 
 const styles = StyleSheet.create({
   root: {

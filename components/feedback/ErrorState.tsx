@@ -1,5 +1,11 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
@@ -9,7 +15,7 @@ type Props = {
   onRetry?: () => void;
 };
 
-export default function ErrorState({ onRetry }: Props) {
+const ErrorState = ({ onRetry }: Props) => {
   return (
     <ThemedView style={styles.root}>
       <ThemedText type="defaultSemiBold" style={styles.title}>
@@ -25,7 +31,9 @@ export default function ErrorState({ onRetry }: Props) {
       )}
     </ThemedView>
   );
-}
+};
+
+export default ErrorState;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

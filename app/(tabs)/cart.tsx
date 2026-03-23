@@ -2,7 +2,7 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, FlatList, Pressable } from 'react-native';
+import { StyleSheet, FlatList, Pressable, type ViewStyle } from 'react-native';
 
 // store
 import { useCartStore, CartState } from '@/store/useCartStore';
@@ -13,7 +13,7 @@ import EmptyState from '@/components/ui/EmptyState';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
 
-export default function CartScreen() {
+const CartScreen = () => {
   const items = useCartStore((state: CartState) => state.items);
 
   if (items.length === 0) {
@@ -30,6 +30,7 @@ export default function CartScreen() {
         data={items}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ gap: 16, padding: 16 }}
+        /* TODO check if there is a patch for react-native types */
         renderItem={({ item }) => (
           <Pressable style={styles.pressable as ViewStyle}>
             <CartItem data={item} />
@@ -39,7 +40,9 @@ export default function CartScreen() {
       <CartSummary />
     </ScreenLayout>
   );
-}
+};
+
+export default CartScreen;
 
 const styles = StyleSheet.create({
   pressable: {

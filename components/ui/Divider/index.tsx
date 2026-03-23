@@ -7,7 +7,7 @@ type Props = {
   color?: string;
 };
 
-export default function Divider({ spacing = 16, color = '#E5E7EB' }: Props) {
+const Divider = ({ spacing = 16, color = '#E5E7EB' }: Props) => {
   return (
     <View
       style={{
@@ -17,4 +17,6 @@ export default function Divider({ spacing = 16, color = '#E5E7EB' }: Props) {
       }}
     />
   );
-}
+};
+
+export default Divider;

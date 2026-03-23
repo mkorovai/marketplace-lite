@@ -1,5 +1,11 @@
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // zustand
 import { useShallow } from 'zustand/react/shallow';
@@ -8,7 +14,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useCartStore, CartState } from '@/store/useCartStore';
 
 // hooks
-import { useDiscountedPrice } from '@/hooks/useDiscountedPrice';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
 
 // service
 import { showSuccess } from '@/lib/toast/toast';
@@ -24,10 +30,10 @@ type Props = {
   data: Item;
 };
 
-export default function CartItem({ data }: Props) {
+const CartItem = ({ data }: Props) => {
   const { id, title, price, discountPercentage = 0, quantity } = data;
 
-  const newPrice = useDiscountedPrice(price, discountPercentage);
+  const newPrice = getDiscountedPrice(price, discountPercentage);
   const { increment, decrement, removeItem } = useCartStore(
     useShallow((state: CartState) => ({
       increment: state.increment,
@@ -65,7 +71,9 @@ export default function CartItem({ data }: Props) {
       </ThemedView>
     </ThemedView>
   );
-}
+};
+
+export default CartItem;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

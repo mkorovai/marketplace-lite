@@ -5,13 +5,22 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { GestureHandlerRootView, Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 // react-native
-import { StyleSheet, Dimensions, Pressable, ScrollView, Animated } from 'react-native';
-import type { ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import {
+  StyleSheet,
+  Dimensions,
+  Pressable,
+  ScrollView,
+  Animated,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // components
 import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import Divider from '@/components/ui/Divider';
+import FilterSection from '@/components/home/FiltersDrawer/FilterSection';
 import SectionTitle from '@/components/home/FiltersDrawer/SectionTitle';
 import ChipButton from '@/components/home/FiltersDrawer/ChipButton';
 import RatingButton from '@/components/home/FiltersDrawer/RatingButton';
@@ -227,42 +236,42 @@ export default function FiltersDrawer(props: {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <SectionTitle label="Sort By" />
-          <ThemedView style={styles.chipRow}>
-            {SORT_OPTIONS.map((item) => (
+          <FilterSection<{ value: string; label: string }>
+            title="Sort By"
+            data={SORT_OPTIONS}
+            keyExtractor={(item) => item.value}
+            renderItem={(item) => (
               <ChipButton
-                key={item.value}
                 label={item.label}
                 selected={localFilters.sortBy === item.value}
                 onPress={setSort(item.value)}
               />
-            ))}
-          </ThemedView>
-          <Divider color="#F3F4F6" />
-          <SectionTitle label="Price Range" />
-          <ThemedView style={styles.chipRow}>
-            {PRICE_PRESETS.map((item) => (
+            )}
+          />
+          <FilterSection<{ label: string; range: { min: number; max: number } }>
+            title="Price Range"
+            data={PRICE_PRESETS}
+            keyExtractor={(item) => item.label}
+            renderItem={(item) => (
               <ChipButton
-                key={item.label}
                 label={item.label}
                 selected={isPricePresetSelected(item.range)}
                 onPress={setPriceRange(item.range)}
               />
-            ))}
-          </ThemedView>
-          <Divider color="#F3F4F6" />
-          <SectionTitle label="Minimum Rating" />
-          <ThemedView style={styles.chipRow}>
-            {RATING_OPTIONS.map((item) => (
+            )}
+          />
+          <FilterSection<number>
+            title="Minimum Rating"
+            data={RATING_OPTIONS}
+            keyExtractor={(item) => item}
+            renderItem={(item) => (
               <RatingButton
-                key={item}
                 value={item}
                 selected={localFilters.minRating === item}
                 onPress={setRating(item)}
               />
-            ))}
-          </ThemedView>
-          <Divider color="#F3F4F6" />
+            )}
+          />
           <SectionTitle label="Availability" />
           <Pressable style={styles.toggleRow} onPress={toggleInStockOnly}>
             <ThemedText type="default" style={styles.toggleLabel}>
@@ -335,11 +344,6 @@ const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageSty
   },
   scrollContent: {
     padding: 16,
-  },
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
   },
   toggleRow: {
     flexDirection: 'row',

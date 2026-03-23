@@ -2,7 +2,13 @@
 import React from 'react';
 
 // react-native
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  type ViewStyle,
+  type TextStyle,
+  type ImageStyle,
+} from 'react-native';
 
 // expo
 import { useRouter } from 'expo-router';
@@ -15,7 +21,7 @@ import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
 
-export default function Header() {
+const Header = () => {
   const router = useRouter();
   const totalItems = useCartStore((state: CartState) => state.totalItems);
   const formattedTotalItems = totalItems > 99 ? '99+' : totalItems.toString();
@@ -39,7 +45,9 @@ export default function Header() {
       </Pressable>
     </ThemedView>
   );
-}
+};
+
+export default Header;
 
 const styles = StyleSheet.create<Record<string, ViewStyle & TextStyle & ImageStyle>>({
   root: {

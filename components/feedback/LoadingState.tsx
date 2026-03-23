@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 // components
 import ThemedView from '@/components/ui/ThemedView';
 
-export default function LoadingState() {
+const LoadingState = () => {
   return (
     <ThemedView style={styles.root}>
       {[...Array(8)].map((_, index) => (
@@ -17,7 +17,9 @@ export default function LoadingState() {
       ))}
     </ThemedView>
   );
-}
+};
+
+export default LoadingState;
 
 const styles = StyleSheet.create({
   root: {
