@@ -3,12 +3,12 @@ import React from 'react';
 
 // react-native
 import {
-  StyleSheet,
   FlatList,
   Pressable,
-  type ViewStyle,
-  type TextStyle,
+  StyleSheet,
   type ImageStyle,
+  type TextStyle,
+  type ViewStyle,
 } from 'react-native';
 
 // expo
@@ -20,13 +20,19 @@ import { useShallow } from 'zustand/react/shallow';
 // store
 import { CartState, useCartStore } from '@/store/useCartStore';
 
+// hooks
+import { useProtectedRoute } from '@/hooks/useProtectedRoute';
+
 // components
-import CheckoutScreenLayout from '@/components/layout/CheckoutScreenLayout';
-import ThemedView from '@/components/ui/ThemedView';
-import ThemedText from '@/components/ui/ThemedText';
 import CheckoutItem from '@/components/cart/CheckoutItem';
+import CheckoutScreenLayout from '@/components/layout/CheckoutScreenLayout';
+import ThemedText from '@/components/ui/ThemedText';
+import ThemedView from '@/components/ui/ThemedView';
 
 const CheckoutScreen = () => {
+  // Protect this route - redirect to login if not authenticated
+  useProtectedRoute();
+
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCartStore(
     useShallow((state: CartState) => ({
@@ -53,7 +59,7 @@ const CheckoutScreen = () => {
           renderItem={({ item }) => <CheckoutItem data={item} />}
         />
         <ThemedView style={styles.cta}>
-          <ThemedText type="mdSemiBold">Total: ${totalPrice}</ThemedText>
+          <ThemedText type="mdSemiBold">Total: ${totalPrice.toFixed(2)}</ThemedText>
           <Pressable style={styles.button} onPress={handleConfirm}>
             <ThemedText style={styles.buttonText}>Confirm Order</ThemedText>
           </Pressable>

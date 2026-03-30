@@ -1,10 +1,13 @@
 // react-native
-import { StyleSheet, type ViewStyle, type TextStyle, type ImageStyle } from 'react-native';
+import { StyleSheet, type ImageStyle, type TextStyle, type ViewStyle } from 'react-native';
+
+// hooks
+import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 
 // components
 import EmptyState from '@/components/ui/EmptyState';
-import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
+import ThemedView from '@/components/ui/ThemedView';
 
 // types
 import { Product } from '@/types/product';
@@ -14,6 +17,9 @@ type Props = {
 };
 
 const FavoritesScreen = ({ products }: Props) => {
+  // Protect this route - redirect to login if not authenticated
+  useProtectedRoute();
+
   if (!products.length) {
     return <EmptyState title="No favorites yet" description="Tap ❤️ on products you like" />;
   }

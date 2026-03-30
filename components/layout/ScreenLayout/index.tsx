@@ -2,8 +2,8 @@
 import React, { ReactNode } from 'react';
 
 // react-native
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // components
 import Header from '@/components/layout/ScreenLayout/Header';

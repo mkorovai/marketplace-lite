@@ -5,7 +5,7 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 
 // store
-import { useCartStore, CartState } from '@/store/useCartStore';
+import { CartState, useCartStore } from '@/store/useCartStore';
 
 // hooks
 import { useColorScheme } from '@/hooks/useColorScheme';

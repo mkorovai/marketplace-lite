@@ -34,7 +34,7 @@ import {
 } from '@/constants/filters';
 
 // types
-import type { PriceRange, FilterState } from '@/types/filters';
+import type { PriceRange, FilterState, SortOption } from '@/types/filters';
 
 // Module constants
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -155,21 +155,21 @@ export default function FiltersDrawer(props: {
       }),
   ).current;
 
-  const setSort = (value) => () => {
+  const setSort = (value: SortOption) => () => {
     setLocalFilters((prevState) => ({
       ...prevState,
       sortBy: value,
     }));
   };
 
-  const setPriceRange = (value) => () => {
+  const setPriceRange = (value: PriceRange) => () => {
     setLocalFilters((prevState) => ({
       ...prevState,
       priceRange: value,
     }));
   };
 
-  const setRating = (value) => () => {
+  const setRating = (value: number) => () => {
     setLocalFilters((prevState) => ({
       ...prevState,
       minRating: prevState.minRating === value ? null : value,
@@ -244,7 +244,7 @@ export default function FiltersDrawer(props: {
               <ChipButton
                 label={item.label}
                 selected={localFilters.sortBy === item.value}
-                onPress={setSort(item.value)}
+                onPress={setSort(item.value as SortOption)}
               />
             )}
           />

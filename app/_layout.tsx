@@ -15,13 +15,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-// configs
+// config
 import { toastConfig } from '@/lib/toast/toastConfig';
-
-// Set tabs as the initial navigation anchor
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,9 +34,13 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
-          <Stack.Screen name="product/[id]" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="product/[id]" />
+          <Stack.Screen name="checkout" />
+          <Stack.Screen name="favorites" />
+          <Stack.Screen name="order-success" />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="(auth)/login" />
         </Stack>
         <StatusBar style="auto" />
         <Toast config={toastConfig} />

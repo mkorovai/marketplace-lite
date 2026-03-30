@@ -1,22 +1,28 @@
 // react-native
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-  StyleSheet,
   Pressable,
-  type ViewStyle,
-  type TextStyle,
+  StyleSheet,
   type ImageStyle,
+  type TextStyle,
+  type ViewStyle,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // expo
 import { useRouter } from 'expo-router';
 
+// hooks
+import { useProtectedRoute } from '@/hooks/useProtectedRoute';
+
 // components
-import ThemedView from '@/components/ui/ThemedView';
 import ThemedText from '@/components/ui/ThemedText';
+import ThemedView from '@/components/ui/ThemedView';
 
 const OrderSuccessScreen = () => {
   const router = useRouter();
+
+  // Protect this route - redirect to login if not authenticated
+  useProtectedRoute();
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom'] as const}>
