@@ -18,5 +18,6 @@ export type Product = {
   rating: number;
   reviews?: Review[];
 
+  images: string[];
   thumbnail: string;
 };

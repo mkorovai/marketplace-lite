@@ -28,7 +28,7 @@ type Props = {
 };
 
 const CategoriesList = ({ activeCategory, setActiveCategory }: Props) => {
-  const changeCategory = (value) => () => setActiveCategory(value);
+  const changeCategory = (value: Category) => () => setActiveCategory(value);
 
   return (
     <ScrollView
@@ -41,7 +41,7 @@ const CategoriesList = ({ activeCategory, setActiveCategory }: Props) => {
           key={`chip-${category}`}
           label={_.capitalize(category)}
           active={category === activeCategory}
-          onPress={changeCategory(category)}
+          onPress={changeCategory(category as Category)}
         />
       ))}
     </ScrollView>

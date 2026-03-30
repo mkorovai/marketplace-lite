@@ -36,7 +36,7 @@ const StickyCTA = (props: Props) => {
   return (
     <ThemedView style={styles.root}>
       <Pressable
-        style={[styles.cartButton, isInCart && styles.cartButtonInCart] as ViewStyle}
+        style={isInCart ? [styles.cartButton, styles.cartButtonInCart] : [styles.cartButton]}
         onPress={onPress}
       >
         <IconSymbol name={iconName} size={18} color="#fff" style={styles.shoppingCartIcon} />

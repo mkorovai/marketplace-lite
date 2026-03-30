@@ -21,7 +21,7 @@ type Props = {
 
 const Chip = ({ label, active = false, onPress }: Props) => {
   return (
-    <Pressable style={[styles.chip, active && styles.chipActive] as ViewStyle} onPress={onPress}>
+    <Pressable style={active ? [styles.chip, styles.chipActive] : [styles.chip]} onPress={onPress}>
       <ThemedText type="default" style={active && styles.chipTextActive}>
         {label}
       </ThemedText>

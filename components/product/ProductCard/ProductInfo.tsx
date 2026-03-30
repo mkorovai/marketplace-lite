@@ -3,30 +3,30 @@ import React from 'react';
 
 // react-native
 import {
-  StyleSheet,
   Pressable,
-  type ViewStyle,
-  type TextStyle,
+  StyleSheet,
   type ImageStyle,
+  type TextStyle,
+  type ViewStyle,
 } from 'react-native';
 
 // zustand
 import { useShallow } from 'zustand/react/shallow';
 
 // store
-import { useCartStore, CartState } from '@/store/useCartStore';
+import { CartState, useCartStore } from '@/store/useCartStore';
 
 // hooks
-import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
 import { getCartIcon } from '@/utils/getCartIcon';
+import { getDiscountedPrice } from '@/utils/getDiscountedPrice';
 
 // service
 import { showSuccess } from '@/lib/toast/toast';
 
 // components
-import ThemedView from '@/components/ui/ThemedView';
-import ThemedText from '@/components/ui/ThemedText';
 import IconSymbol from '@/components/ui/IconSymbol';
+import ThemedText from '@/components/ui/ThemedText';
+import ThemedView from '@/components/ui/ThemedView';
 
 // types
 import { Product } from '@/types/product';
@@ -89,7 +89,7 @@ const ProductInfo = (props: Props) => {
         </ThemedView>
         {showCartButton && (
           <Pressable
-            style={[styles.cartButton, isInCart && styles.cartButtonInCart] as ViewStyle}
+            style={isInCart ? [styles.cartButton, styles.cartButtonInCart] : [styles.cartButton]}
             onPress={handleAddItem}
           >
             <IconSymbol name={iconName} size={18} color="#fff" />

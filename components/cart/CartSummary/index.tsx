@@ -33,7 +33,7 @@ const CartSummary = () => {
     <ThemedView style={styles.root}>
       <ThemedView>
         <ThemedText>{totalItems} items</ThemedText>
-        <ThemedText>${totalPrice}</ThemedText>
+        <ThemedText>${totalPrice.toFixed(2)}</ThemedText>
       </ThemedView>
       <ThemedView>
         <Pressable style={styles.button as ViewStyle} onPress={() => router.push('/checkout')}>

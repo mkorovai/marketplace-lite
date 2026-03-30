@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // zustand
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 // utils
 import { calculateTotals } from '@/utils/calculateTotals';
@@ -84,6 +84,7 @@ export const useCartStore = create(
           };
         });
       },
+
       clearCart: () =>
         set({
           items: [],
@@ -94,11 +95,12 @@ export const useCartStore = create(
     {
       name: 'cart-storage',
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (state) => ({
-        items: state.items,
-        totalItems: state.totalItems,
-        totalPrice: state.totalPrice,
-      }),
+      partialize: (state) =>
+        ({
+          items: state.items,
+          totalItems: state.totalItems,
+          totalPrice: state.totalPrice,
+        }) as CartState,
     },
   ),
 );
